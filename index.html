@@ -967,86 +967,40 @@
             </div>
         </section>
 
-        <section class="work section" id="work">
-            <h2 class="section-title">Projects</h2>
-            <div class="work__container bd-grid">
-                <div class="work__item">
-                    <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag ml">ML</span>
-                        <span class="role-tag swe">API</span>
-                        <span class="role-tag swe">Backend</span>
+            <!--===== PROJECTS =====-->
+            <section class="work section" id="work">
+                <h2 class="section-title">Projects</h2>
+                
+                <div class="work__container bd-grid">
+                    <div class="work__item">
+                        <h3 class="work__title">MedLLM – Medical Language Model</h3>
+                        <p class="work__tech">PyTorch, Transformers, Hugging Face, NLP, FastAPI, RAG | 2025</p>
+                        <p class="work__description">
+                            • Fine-tuned Ollama 7B large language model using Hugging Face Transformers library with LoRA (Low-Rank Adaptation) on comprehensive medical corpus including PubMed research articles and MIMIC-III clinical notes, using cross-entropy loss and AdamW optimizer for clinical NLP applications<br><br>
+                            • Applied parameter-efficient fine-tuning techniques with LoRA to reduce training costs while maintaining model quality, utilizing Optuna for Bayesian optimization and grid search hyperparameter tuning, achieving 80% perplexity improvement and 15% higher ROUGE scores compared to baseline<br><br>
+                            • Deployed production-ready medical AI assistant with FastAPI REST API and implemented Retrieval-Augmented Generation (RAG) architecture using Pinecone vector database for semantic search, reducing hallucinations by 30% and improving factual accuracy<br><br>
+                            • Implemented custom preprocessing pipeline for medical text normalization, entity recognition, and terminology standardization to improve model understanding of clinical language and medical abbreviations<br><br>
+                            • Developed comprehensive evaluation framework measuring clinical accuracy, response coherence, and medical reasoning capabilities using domain-specific metrics and expert validation<br><br>
+                            • Created secure authentication system with role-based access control and HIPAA-compliant data handling practices to ensure patient privacy and regulatory compliance<br><br>
+                            • Integrated medical knowledge graphs and ontologies (UMLS, SNOMED CT) to enhance model's understanding of medical relationships and improve diagnostic reasoning capabilities
+                        </p>
                     </div>
-                    <h3 class="work__title">MedLLM – Medical Language Model</h3>
-                    <p class="work__tech">PyTorch | Transformers | LoRA | RAG | FastAPI | Pinecone</p>
-                    <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Fine-tuned Ollama 7B with LoRA on PubMed + MIMIC-III clinical notes<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Achieved <span class="code-number">80%</span> perplexity improvement and <span class="code-number">15%</span> higher ROUGE scores<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built production API with FastAPI, async handling, and rate limiting<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Implemented RAG architecture with Pinecone vector DB
-                    </p>
-                    <div class="work__links">
-                        <a href="https://github.com/divyankmalik" class="work__link"><i class='bx bxl-github'></i> View Code</a>
-                    </div>
-                </div>
 
-                <div class="work__item">
-                    <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag swe">Full Stack</span>
-                        <span class="role-tag ml">NLP</span>
-                        <span class="role-tag swe">API</span>
-                    </div>
-                    <h3 class="work__title">AI Calendar Scheduling Agent</h3>
-                    <p class="work__tech">Python | NLP | spaCy | FastAPI | PostgreSQL | JWT</p>
-                    <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Built NLP agent with spaCy for intent recognition and temporal parsing<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Designed O(n) conflict detection using interval tree data structure<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built RESTful API with FastAPI, JWT auth, PostgreSQL persistence<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Integrated Google Calendar + Outlook APIs with webhooks
-                    </p>
-                    <div class="work__links">
-                        <a href="https://github.com/divyankmalik" class="work__link"><i class='bx bxl-github'></i> View Code</a>
+                    <div class="work__item">
+                        <h3 class="work__title">AI Calendar Scheduling Agent</h3>
+                        <p class="work__tech">Python, NLP, FastAPI, PostgreSQL, spaCy, JWT | 2025</p>
+                        <p class="work__description">
+                            • Built intelligent autonomous scheduling agent with advanced NLP capabilities using spaCy for intent recognition, named entity extraction, and temporal expression parsing to understand natural language scheduling requests<br><br>
+                            • Implemented highly efficient O(n) conflict detection algorithm using interval tree data structure, successfully processing 500+ calendar events with zero double-bookings and providing instant availability suggestions<br><br>
+                            • Deployed robust RESTful API with FastAPI framework, implementing JWT-based authentication and authorization, and seamlessly integrated Google Calendar and Microsoft Outlook APIs with PostgreSQL backend for persistent data storage<br><br>
+                            • Developed intelligent time zone handling system supporting multiple geographic regions and automatic daylight saving time adjustments for accurate global scheduling coordination<br><br>
+                            • Implemented smart scheduling suggestions using machine learning algorithms to analyze user preferences, meeting patterns, and optimal meeting times based on historical data<br><br>
+                            • Created comprehensive notification system with email and webhook integrations for meeting reminders, updates, and cancellations with configurable alert preferences<br><br>
+                            • Built admin dashboard for monitoring system performance, analyzing scheduling patterns, and managing user permissions with real-time analytics and reporting capabilities
+                        </p>
                     </div>
                 </div>
-
-                <div class="work__item">
-                    <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag ml">Research</span>
-                        <span class="role-tag ml">GNNs</span>
-                        <span class="role-tag swe">Distributed</span>
-                    </div>
-                    <h3 class="work__title">Hypergraph Recommender System</h3>
-                    <p class="work__tech">PyTorch | PyTorch Geometric | CUDA | Ray | AWS</p>
-                    <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Novel hypergraph neural network for large-scale recommendations<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Custom CUDA kernels for sparse hypergraph operations<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Distributed training infrastructure on multi-GPU cluster with Ray<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Beat SOTA baselines by <span class="code-number">8-12%</span> on benchmarks
-                    </p>
-                    <div class="work__links">
-                        <a href="https://github.com/divyankmalik" class="work__link"><i class='bx bxl-github'></i> View Code</a>
-                    </div>
-                </div>
-
-                <div class="work__item">
-                    <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag swe">Production</span>
-                        <span class="role-tag ml">RecSys</span>
-                        <span class="role-tag swe">DevOps</span>
-                    </div>
-                    <h3 class="work__title">Production ML Pipeline</h3>
-                    <p class="work__tech">Flask | Docker | AWS | GitHub Actions | Redis | PostgreSQL</p>
-                    <p class="work__description">
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Designed microservices architecture with Flask APIs and Docker<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Implemented CI/CD with GitHub Actions – automated testing, deployment<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built caching layer with Redis achieving <span class="code-number">&lt;200ms</span> p95 latency<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Automated model retraining with data drift detection
-                    </p>
-                    <div class="work__links">
-                        <a href="https://github.com/divyankmalik" class="work__link"><i class='bx bxl-github'></i> View Code</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
         <section class="contact section" id="contact">
             <h2 class="section-title">Contact</h2>
