@@ -527,6 +527,192 @@
         .footer__icon { font-size: 1.5rem; color: var(--text-secondary); margin: 0 1rem; transition: color .3s; }
         .footer__icon:hover { color: var(--accent-green); }
         .footer__copy { color: var(--text-secondary); font-family: var(--code-font); font-size: 0.85rem; }
+        /* ===================== Animations & UI polish ===================== */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes shine { to { left: 140%; } }
+        @keyframes gridDrift {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(0, 48px, 0); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseRing {
+            0% { box-shadow: 0 0 0 0 rgba(127, 219, 202, 0.5); }
+            70% { box-shadow: 0 0 0 8px rgba(127, 219, 202, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(127, 219, 202, 0); }
+        }
+
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px; width: 0;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple));
+            z-index: calc(var(--z-fixed) + 10);
+            box-shadow: 0 0 12px rgba(127, 219, 202, 0.5);
+            transition: width .1s linear;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-green), var(--accent-purple));
+            border-radius: 10px;
+            border: 2px solid var(--bg-secondary);
+        }
+
+        /* Animated grid backdrop */
+        .grid-backdrop {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(127, 219, 202, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(127, 219, 202, 0.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+            animation: gridDrift 14s linear infinite;
+        }
+
+        /* Mouse spotlight */
+        .spotlight {
+            position: fixed;
+            width: 420px; height: 420px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(130, 170, 255, 0.07) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity .4s;
+            opacity: 0;
+        }
+
+        /* Animated gradient name */
+        .gradient-name {
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple), var(--accent-green));
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s linear infinite;
+        }
+
+        /* Nav underline */
+        .nav__link { position: relative; padding-bottom: 2px; }
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-purple));
+            transition: width .3s ease;
+        }
+        .nav__link:hover::after, .nav__link.active-link::after { width: 100%; }
+
+        /* Status pill */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: rgba(127, 219, 202, 0.08);
+            border: 1px solid rgba(127, 219, 202, 0.3);
+            color: var(--accent-green);
+            font-family: var(--code-font);
+            font-size: .75rem;
+            padding: .35rem .85rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+        .status-pill .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulseRing 2s infinite;
+        }
+
+        /* Card shine sweep on hover */
+        .work__item, .experience__content, .education__content, .skill-card, .expertise-card { overflow: hidden; }
+        .work__item::after, .experience__content::after, .education__content::after, .skill-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -140%;
+            width: 60%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(127, 219, 202, 0.08), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+        }
+        .work__item:hover::after, .experience__content:hover::after,
+        .education__content:hover::after, .skill-card:hover::after { animation: shine .9s ease; }
+
+        /* 3D tilt containers */
+        .work__container, .expertise-grid { perspective: 1000px; }
+        .work__item, .expertise-card { transition: transform .25s ease, border-color .3s, box-shadow .3s; transform-style: preserve-3d; }
+
+        /* Floating role badges */
+        .role-badge i { animation: float 4s ease-in-out infinite; }
+        .role-badge.ml i { animation-delay: .8s; }
+
+        /* Tech pill glow */
+        .tech-pill:hover { box-shadow: 0 0 12px rgba(127, 219, 202, 0.25); }
+        .skill-tag:hover { background-color: rgba(127, 219, 202, 0.12); transform: translateY(-2px); }
+        .skill-tag { display: inline-block; }
+
+        /* Section title reveal */
+        .section-title::after { transition: width .5s ease; }
+        .section-title:hover::after { width: 140px; }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            right: 1.5rem; bottom: 1.5rem;
+            width: 44px; height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--bg-code);
+            border: 1px solid var(--border-color);
+            color: var(--accent-green);
+            font-size: 1.4rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: all .3s;
+            z-index: var(--z-fixed);
+        }
+        .back-to-top.show-top { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent-green); box-shadow: 0 0 18px rgba(127, 219, 202, 0.25); }
+
+        /* Buttons */
+        .button { position: relative; overflow: hidden; }
+        .button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+            transform: translateX(-120%) skewX(-20deg);
+            transition: transform .6s ease;
+        }
+        .button:hover::after { transform: translateX(120%) skewX(-20deg); }
+        .button-secondary:hover { box-shadow: 0 4px 20px rgba(127, 219, 202, 0.25); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after { animation: none !important; transition: none !important; }
+        }
+
         @media screen and (min-width: 768px) {
             :root { --big-font-size: 3.5rem; --normal-font-size: 1rem; }
             body { margin: 0; }
@@ -547,9 +733,12 @@
         }
     </style>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-    <title>Divyank Malik - Software & ML Engineer</title>
+    <title>Divyank Malik - Software & AI Agent Engineer</title>
 </head>
 <body>
+    <div class="grid-backdrop"></div>
+    <div class="spotlight" id="spotlight"></div>
+    <div class="scroll-progress" id="scroll-progress"></div>
     <header class="l-header">
         <nav class="nav bd-grid">
             <div><a href="#" class="nav__logo">divyank.dev</a></div>
@@ -576,7 +765,7 @@
                         <div class="terminal-dot red"></div>
                         <div class="terminal-dot yellow"></div>
                         <div class="terminal-dot green"></div>
-                        <span class="terminal-title">divyank@full-stack-ml:~</span>
+                        <span class="terminal-title">divyank@agentic-systems:~</span>
                     </div>
                     <div class="terminal-body">
                         <div class="terminal-line">
@@ -587,16 +776,18 @@
                             <span class="code-comment"># Hello World! I'm</span>
                         </div>
                         <div class="terminal-line">
-                            <span class="code-class" style="font-size: 1.5rem;">Divyank Malik</span>
+                            <span class="gradient-name" style="font-size: 1.75rem; font-weight: 700;">Divyank Malik</span>
                         </div>
                         <div class="terminal-line" style="margin-top: 0.5rem;">
                             <span class="code-keyword">role</span><span style="color: var(--text-primary)"> = </span><span class="typing-text" id="typing-text"></span>
                         </div>
                         <div class="terminal-line" style="margin-top: 0.5rem;">
-                            <span class="code-keyword">stack</span><span style="color: var(--text-primary)"> = [</span><span class="code-string">"Software Engineering"</span><span style="color: var(--text-primary)">, </span><span class="code-string">"Machine Learning"</span><span style="color: var(--text-primary)">]</span>
+                            <span class="code-keyword">stack</span><span style="color: var(--text-primary)"> = [</span><span class="code-string">"Software Engineering"</span><span style="color: var(--text-primary)">, </span><span class="code-string">"Agentic AI & LLMs"</span><span style="color: var(--text-primary)">]</span>
                         </div>
                     </div>
                 </div>
+
+                <div class="status-pill"><span class="dot"></span> Currently building multi-agent systems</div>
 
                 <div class="dual-role-container">
                     <div class="role-badge swe">
@@ -607,54 +798,57 @@
                         </div>
                     </div>
                     <div class="role-badge ml">
-                        <i class='bx bx-brain'></i>
+                        <i class='bx bx-bot'></i>
                         <div class="role-badge__content">
-                            <h4>ML Engineer</h4>
-                            <p>Deep Learning & AI</p>
+                            <h4>AI Agentic & LLM Engineer</h4>
+                            <p>Multi-Agent Systems & RAG</p>
                         </div>
                     </div>
                 </div>
 
                 <p class="home__description">
-                    I build <span class="code-function">intelligent software systems</span> that combine robust engineering with cutting-edge ML. 
-                    From designing <span class="code-string">production-grade APIs</span> and <span class="code-string">microservices</span> to developing 
-                    <span class="code-string">state-of-the-art neural networks</span>, I bridge the gap between software craftsmanship and AI innovation.
+                    I build <span class="code-function">agentic AI systems</span> on top of solid engineering foundations.
+                    From orchestrating <span class="code-string">multi-agent workflows</span> and <span class="code-string">real-time voice agents</span> to shipping
+                    <span class="code-string">production APIs</span> that serve them, I turn LLMs into software people can actually rely on.
                 </p>
 
+                <div class="tech-stack-section">
+                    <div class="tech-stack-label">Agentic AI & LLMs</div>
+                    <div class="tech-stack">
+                        <span class="tech-pill ml">LangGraph</span>
+                        <span class="tech-pill ml">LangChain</span>
+                        <span class="tech-pill ml">Anthropic Claude</span>
+                        <span class="tech-pill ml">Tool Calling</span>
+                        <span class="tech-pill ml">RAG</span>
+                        <span class="tech-pill ml">FAISS</span>
+                        <span class="tech-pill ml">Multi-Agent Orchestration</span>
+                        <span class="tech-pill ml">Evals & Guardrails</span>
+                    </div>
+                </div>
+                <div class="tech-stack-section">
+                    <div class="tech-stack-label">Voice & Multimodal</div>
+                    <div class="tech-stack">
+                        <span class="tech-pill cloud">Pipecat</span>
+                        <span class="tech-pill cloud">LiveKit</span>
+                        <span class="tech-pill cloud">Deepgram</span>
+                        <span class="tech-pill cloud">Gemini Live API</span>
+                        <span class="tech-pill cloud">Whisper</span>
+                        <span class="tech-pill cloud">WebRTC</span>
+                    </div>
+                </div>
                 <div class="tech-stack-section">
                     <div class="tech-stack-label">Software Engineering</div>
                     <div class="tech-stack">
                         <span class="tech-pill swe">Python</span>
+                        <span class="tech-pill swe">TypeScript</span>
                         <span class="tech-pill swe">FastAPI</span>
                         <span class="tech-pill swe">Flask</span>
-                        <span class="tech-pill swe">Docker</span>
-                        <span class="tech-pill swe">Kubernetes</span>
-                        <span class="tech-pill swe">CI/CD</span>
+                        <span class="tech-pill swe">React</span>
                         <span class="tech-pill swe">REST APIs</span>
-                        <span class="tech-pill swe">PostgreSQL</span>
-                    </div>
-                </div>
-                <div class="tech-stack-section">
-                    <div class="tech-stack-label">Machine Learning</div>
-                    <div class="tech-stack">
-                        <span class="tech-pill ml">PyTorch</span>
-                        <span class="tech-pill ml">TensorFlow</span>
-                        <span class="tech-pill ml">Transformers</span>
-                        <span class="tech-pill ml">GNNs</span>
-                        <span class="tech-pill ml">Computer Vision</span>
-                        <span class="tech-pill ml">NLP</span>
-                        <span class="tech-pill ml">CUDA</span>
-                    </div>
-                </div>
-                <div class="tech-stack-section">
-                    <div class="tech-stack-label">Cloud & MLOps</div>
-                    <div class="tech-stack">
-                        <span class="tech-pill cloud">AWS</span>
-                        <span class="tech-pill cloud">SageMaker</span>
-                        <span class="tech-pill cloud">EC2/S3</span>
-                        <span class="tech-pill cloud">MLflow</span>
-                        <span class="tech-pill cloud">Ray</span>
-                        <span class="tech-pill cloud">W&B</span>
+                        <span class="tech-pill db">PostgreSQL</span>
+                        <span class="tech-pill swe">GitHub Actions</span>
+                        <span class="tech-pill cloud">GCP</span>
+                        <span class="tech-pill swe">Linux</span>
                     </div>
                 </div>
 
@@ -678,14 +872,14 @@
                     <img src="assets/img/portfolio-front-photo.png" alt="">
                 </div>
                 <div>
-                    <h2 class="about__subtitle">FullStackMLEngineer</h2>
+                    <h2 class="about__subtitle">AgenticAIEngineer</h2>
                     <p class="about__text">
                         <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span style="color: var(--accent-orange);">self</span>):<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: var(--accent-orange);">self</span>.<span class="code-function">software_skills</span> = [<span class="code-string">"APIs"</span>, <span class="code-string">"Microservices"</span>, <span class="code-string">"Distributed Systems"</span>]<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: var(--accent-orange);">self</span>.<span class="code-function">ml_skills</span> = [<span class="code-string">"Deep Learning"</span>, <span class="code-string">"Computer Vision"</span>, <span class="code-string">"NLP"</span>]
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: var(--accent-orange);">self</span>.<span class="code-function">software_skills</span> = [<span class="code-string">"APIs"</span>, <span class="code-string">"Backend"</span>, <span class="code-string">"Distributed Systems"</span>]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: var(--accent-orange);">self</span>.<span class="code-function">agent_skills</span> = [<span class="code-string">"Multi-Agent"</span>, <span class="code-string">"RAG"</span>, <span class="code-string">"Voice AI"</span>]
                     </p>
                     <p class="about__text">
-                        I'm a <strong style="color: var(--accent-blue);">Software Engineer</strong> and <strong style="color: var(--accent-purple);">Machine Learning Engineer</strong> who believes the best AI products come from combining solid software engineering principles with cutting-edge ML research.
+                        I'm a <strong style="color: var(--accent-blue);">Software Engineer</strong> and <strong style="color: var(--accent-purple);">AI Agentic &amp; LLM Engineer</strong> who believes the best AI products come from pairing solid software engineering with agents that are orchestrated, evaluated, and guardrailed — not just prompted.
                     </p>
 
                     <div class="expertise-grid">
@@ -695,56 +889,56 @@
                                 <h3>Software Engineering</h3>
                             </div>
                             <ul class="expertise-card__list">
-                                <li>Production REST APIs & Microservices</li>
-                                <li>Docker & Kubernetes Deployments</li>
-                                <li>CI/CD Pipelines & DevOps</li>
-                                <li>Database Design & Optimization</li>
-                                <li>System Design & Architecture</li>
+                                <li>Production REST APIs & Backends</li>
+                                <li>Auth, Caching & Schema Optimization</li>
+                                <li>CI/CD Pipelines & GitHub Actions</li>
+                                <li>Database Design & Query Tuning</li>
+                                <li>Testing & Reliability at 90%+ Coverage</li>
                             </ul>
                         </div>
                         <div class="expertise-card ml">
                             <div class="expertise-card__header">
-                                <i class='bx bx-brain'></i>
-                                <h3>Machine Learning</h3>
+                                <i class='bx bx-bot'></i>
+                                <h3>Agentic AI & LLMs</h3>
                             </div>
                             <ul class="expertise-card__list">
-                                <li>Deep Neural Networks & GNNs</li>
-                                <li>Computer Vision & NLP</li>
-                                <li>Model Optimization & CUDA</li>
-                                <li>Distributed Training</li>
-                                <li>MLOps & Model Deployment</li>
+                                <li>Multi-Agent Orchestration with LangGraph</li>
+                                <li>Tool Calling & Structured Outputs</li>
+                                <li>RAG Pipelines & Vector Retrieval</li>
+                                <li>Real-Time Voice & Multimodal Agents</li>
+                                <li>Evals, Guardrails & Human-in-the-Loop</li>
                             </ul>
                         </div>
                     </div>
-                    
+
                     <div class="stats-container">
                         <div class="stat-item swe">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Users Served</div>
+                            <div class="stat-number" data-count="90" data-suffix="%+">0</div>
+                            <div class="stat-label">Test Coverage</div>
                             <div class="stat-category">Software</div>
                         </div>
                         <div class="stat-item swe">
-                            <div class="stat-number">&lt;200ms</div>
-                            <div class="stat-label">API Latency p95</div>
+                            <div class="stat-number" data-count="40" data-suffix="%">0</div>
+                            <div class="stat-label">Fewer Prod Bugs</div>
+                            <div class="stat-category">Software</div>
+                        </div>
+                        <div class="stat-item swe">
+                            <div class="stat-number" data-count="1" data-suffix="K+">0</div>
+                            <div class="stat-label">Daily Requests</div>
                             <div class="stat-category">Software</div>
                         </div>
                         <div class="stat-item ml">
-                            <div class="stat-number">1.5M+</div>
-                            <div class="stat-label">Data Points</div>
-                            <div class="stat-category">ML</div>
+                            <div class="stat-number" data-count="5" data-suffix="">0</div>
+                            <div class="stat-label">Agentic AI Systems</div>
+                            <div class="stat-category">AI</div>
                         </div>
                         <div class="stat-item ml">
-                            <div class="stat-number">12%</div>
-                            <div class="stat-label">SOTA Improvement</div>
-                            <div class="stat-category">ML</div>
-                        </div>
-                        <div class="stat-item ml">
-                            <div class="stat-number">40%</div>
-                            <div class="stat-label">Training Speedup</div>
-                            <div class="stat-category">ML</div>
+                            <div class="stat-number" data-count="30" data-suffix="K+">0</div>
+                            <div class="stat-label">Data Points Modeled</div>
+                            <div class="stat-category">AI</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">3.9</div>
+                            <div class="stat-number" data-count="3.9" data-suffix="">0</div>
                             <div class="stat-label">GPA @ ASU</div>
                             <div class="stat-category" style="color: var(--accent-green);">Academic</div>
                         </div>
@@ -766,16 +960,16 @@
                 <div class="education__content">
                     <h3 class="education__title">B.S. Computer Science</h3>
                     <span class="education__subtitle">Arkansas State University, Jonesboro, AR</span>
-                    <span class="education__date">Feb 2025 – May 2027</span>
+                    <span class="education__date">2025 – 2027</span>
                     <p class="education__description">
-                        <span class="code-keyword">gpa</span> = <span class="code-number">3.71</span> / <span class="code-number">4.0</span><br><br>
+                        <span class="code-keyword">gpa</span> = <span class="code-number">3.62</span> / <span class="code-number">4.0</span><br><br>
                         Focused coursework in Algorithms, Data Structures, Distributed Systems, Machine Learning, and Software Engineering.
                     </p>
                 </div>
                 <div class="education__content">
                     <h3 class="education__title">B.S. Computer Science</h3>
                     <span class="education__subtitle">Arizona State University, Tempe, AZ</span>
-                    <span class="education__date">Aug 2023 – Jan 2025</span>
+                    <span class="education__date">2023 – 2025</span>
                     <p class="education__description">
                         <span class="code-keyword">gpa</span> = <span class="code-number">3.9</span> / <span class="code-number">4.0</span><br><br>
                         Strong foundation in CS fundamentals, Object-Oriented Design, Database Systems, and Software Development.
@@ -788,71 +982,99 @@
             <h2 class="section-title">Experience</h2>
             <div class="experience__container bd-grid">
                 <div class="experience__content">
-                    <h3 class="experience__title">Machine Learning Research Assistant</h3>
-                    <span class="experience__subtitle">Under Mr. Anirban Majumdar (Data Scientist @ Amazon) | Remote</span>
+                    <h3 class="experience__title">Software Engineering Intern</h3>
+                    <span class="experience__subtitle">IntelliTrade | Remote</span>
+                    <span class="experience__date">Jul 2026 – Present</span>
+                    <div class="role-tags">
+                        <span class="role-tag ml">AI Agents</span>
+                        <span class="role-tag swe">Backend</span>
+                        <span class="role-tag swe">Auth</span>
+                    </div>
+                    <p class="experience__description">
+                        <strong style="color: var(--accent-purple);">[AI]</strong> Built AI trading agents using Claude that analyze user input and recommend strategies for first-time traders<br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Engineered user authentication and authorization system supporting <span class="code-number">50+</span> users<br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Designed and integrated REST APIs enabling real-time data access<br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Reduced query latency by <span class="code-number">30%</span> through caching and schema optimization<br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Achieved <span class="code-number">90%+</span> test coverage while shipping reliable features that cut production bugs by <span class="code-number">40%</span><br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Worked in Linux environments
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-pill swe">Python</span>
+                        <span class="tech-pill swe">TypeScript</span>
+                        <span class="tech-pill swe">Flask</span>
+                        <span class="tech-pill db">PostgreSQL</span>
+                        <span class="tech-pill db">SQL</span>
+                        <span class="tech-pill swe">GitHub Actions</span>
+                        <span class="tech-pill cloud">GCP</span>
+                        <span class="tech-pill swe">JIRA</span>
+                    </div>
+                </div>
+
+                <div class="experience__content">
+                    <h3 class="experience__title">Machine Learning Research</h3>
+                    <span class="experience__subtitle">Under Anirban Majumdar, Applied Scientist @ Amazon | Remote</span>
                     <span class="experience__date">Aug 2025 – Present</span>
                     <div class="role-tags">
-                        <span class="role-tag ml">ML Engineering</span>
-                        <span class="role-tag ml">Deep Learning</span>
-                        <span class="role-tag swe">System Design</span>
+                        <span class="role-tag ml">ML Research</span>
+                        <span class="role-tag ml">GNNs</span>
+                        <span class="role-tag ml">AI Safety</span>
                     </div>
                     <p class="experience__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Developed HypergraphOfThought framework using PyTorch and GNNs with multi-head attention, processing <span class="code-number">1.5M+</span> hyperedges<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Implemented custom CUDA kernels for collaborative filtering and optimized message passing<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Architected end-to-end ML pipeline with Ray Tune for distributed hyperparameter optimization<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Achieved <span class="code-number">8-12%</span> improvement over SOTA baselines (LightGCN, NGCF)
+                        <strong style="color: var(--accent-purple);">[ML]</strong> Built HOT, a hypergraph neural network recommendation system, on <span class="code-number">30K+</span> data points, achieving a <span class="code-number">3-4%</span> improvement on Recall@5 and NDCG@5, targeting RecSys and KDD<br><br>
+                        <strong style="color: var(--accent-purple);">[ML]</strong> Authored an AI safety taxonomy synthesizing risks across the generative AI lifecycle
                     </p>
                     <div class="tech-stack">
+                        <span class="tech-pill ml">Python</span>
                         <span class="tech-pill ml">PyTorch</span>
-                        <span class="tech-pill ml">CUDA</span>
-                        <span class="tech-pill swe">Ray Tune</span>
-                        <span class="tech-pill ml">GNNs</span>
+                        <span class="tech-pill ml">LangGraph</span>
+                        <span class="tech-pill ml">FAISS</span>
+                        <span class="tech-pill ml">MLflow</span>
                     </div>
                 </div>
 
                 <div class="experience__content">
-                    <h3 class="experience__title">Machine Learning Intern</h3>
+                    <h3 class="experience__title">Software Engineering Intern</h3>
                     <span class="experience__subtitle">Soaper.AI | Seattle, WA</span>
-                    <span class="experience__date">Jan 2025 – May 2025</span>
+                    <span class="experience__date">Feb 2025 – May 2025</span>
                     <div class="role-tags">
-                        <span class="role-tag ml">Computer Vision</span>
-                        <span class="role-tag ml">NLP</span>
-                        <span class="role-tag swe">API Development</span>
+                        <span class="role-tag ml">AI Agents</span>
+                        <span class="role-tag swe">Backend</span>
+                        <span class="role-tag swe">Distributed Systems</span>
                     </div>
                     <p class="experience__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Fine-tuned ResNet-50, EfficientNet-B4, and ViT on <span class="code-number">100K+</span> medical images<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Built multimodal CNN + BERT pipeline, improving diagnostic accuracy by <span class="code-number">25%</span><br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built data preprocessing pipeline for DICOM/NIfTI formats with quality control<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Implemented distributed training with PyTorch DDP achieving <span class="code-number">2x</span> speedup
+                        <strong style="color: var(--accent-purple);">[AI]</strong> Shipped a voice-to-SOAP-note AI agent using Claude, reducing a 20-minute manual process to under 90 seconds<br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Handled <span class="code-number">1K+</span> daily requests, achieving a <span class="code-number">25%</span> efficiency improvement<br><br>
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Executed distributed processing achieving a <span class="code-number">2x</span> throughput improvement and <span class="code-number">15%</span> cost reduction
                     </p>
                     <div class="tech-stack">
-                        <span class="tech-pill ml">Computer Vision</span>
-                        <span class="tech-pill ml">Transformers</span>
-                        <span class="tech-pill swe">PyTorch DDP</span>
+                        <span class="tech-pill swe">Python</span>
+                        <span class="tech-pill swe">TypeScript</span>
+                        <span class="tech-pill ml">LangChain</span>
+                        <span class="tech-pill ml">LangGraph</span>
+                        <span class="tech-pill swe">Flask</span>
+                        <span class="tech-pill db">PostgreSQL</span>
+                        <span class="tech-pill swe">GitHub Actions</span>
+                        <span class="tech-pill swe">JIRA</span>
                     </div>
                 </div>
 
                 <div class="experience__content">
-                    <h3 class="experience__title">Software & ML Developer</h3>
+                    <h3 class="experience__title">Full Stack Developer</h3>
                     <span class="experience__subtitle">EPICS, Arizona State University | Tempe, AZ</span>
                     <span class="experience__date">Jan 2024 – Dec 2024</span>
                     <div class="role-tags">
                         <span class="role-tag swe">Full Stack</span>
-                        <span class="role-tag swe">DevOps</span>
-                        <span class="role-tag ml">RecSys</span>
+                        <span class="role-tag swe">Marketplace</span>
                     </div>
                     <p class="experience__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Built recommendation system using collaborative filtering and XGBoost serving <span class="code-number">500+</span> users<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Deployed production ML pipeline with Flask + Docker on AWS EC2<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Implemented CI/CD with GitHub Actions for automated testing and deployment<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Designed real-time inference engine achieving <span class="code-number">&lt;200ms</span> latency at p95
+                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built a marketplace for people to buy and sell home grown fruits and vegetables, serving <span class="code-number">20+</span> users
                     </p>
                     <div class="tech-stack">
-                        <span class="tech-pill swe">Flask</span>
-                        <span class="tech-pill cloud">AWS EC2</span>
-                        <span class="tech-pill swe">Docker</span>
-                        <span class="tech-pill ml">XGBoost</span>
-                        <span class="tech-pill swe">CI/CD</span>
+                        <span class="tech-pill swe">Python</span>
+                        <span class="tech-pill swe">TypeScript</span>
+                        <span class="tech-pill swe">React</span>
+                        <span class="tech-pill db">PostgreSQL</span>
+                        <span class="tech-pill swe">GitHub</span>
                     </div>
                 </div>
             </div>
@@ -863,7 +1085,7 @@
             <div class="intersection-badge">
                 <i class='bx bx-intersect intersection-badge__icon'></i>
                 <p class="intersection-badge__text">
-                    Where <span>Software Engineering</span> meets <span>Machine Learning</span>
+                    Where <span>Software Engineering</span> meets <span>Agentic AI</span>
                 </p>
             </div>
             <div class="skills-grid bd-grid">
@@ -881,11 +1103,11 @@
                 <div class="skill-card swe-card">
                     <h3 class="skill-card__title"><i class='bx bx-cloud'></i> DevOps & Cloud <span class="skill-card__category">SWE</span></h3>
                     <div class="skill-tags">
+                        <span class="skill-tag">GCP</span>
                         <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">AWS EC2/S3</span>
                         <span class="skill-tag">CI/CD</span>
                         <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">Render</span>
                         <span class="skill-tag">Linux</span>
                     </div>
                 </div>
@@ -893,75 +1115,85 @@
                     <h3 class="skill-card__title"><i class='bx bx-data'></i> Databases <span class="skill-card__category">SWE</span></h3>
                     <div class="skill-tags">
                         <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">Pinecone</span>
-                        <span class="skill-tag">Apache Spark</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">SQLite</span>
+                        <span class="skill-tag">Supabase</span>
+                        <span class="skill-tag">FAISS</span>
                     </div>
                 </div>
                 <div class="skill-card ml-card">
-                    <h3 class="skill-card__title"><i class='bx bx-brain'></i> Deep Learning <span class="skill-card__category">ML</span></h3>
+                    <h3 class="skill-card__title"><i class='bx bx-bot'></i> Agentic AI <span class="skill-card__category">AI</span></h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Neural Networks</span>
-                        <span class="skill-tag">CNNs</span>
-                        <span class="skill-tag">Transformers</span>
-                        <span class="skill-tag">GNNs</span>
-                        <span class="skill-tag">Attention</span>
-                        <span class="skill-tag">Transfer Learning</span>
+                        <span class="skill-tag">LangGraph</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">Multi-Agent DAGs</span>
+                        <span class="skill-tag">Tool Calling</span>
+                        <span class="skill-tag">Human-in-the-Loop</span>
+                        <span class="skill-tag">Guardrails</span>
                     </div>
                 </div>
                 <div class="skill-card ml-card">
-                    <h3 class="skill-card__title"><i class='bx bx-analyse'></i> ML Domains <span class="skill-card__category">ML</span></h3>
+                    <h3 class="skill-card__title"><i class='bx bx-message-square-dots'></i> LLMs & RAG <span class="skill-card__category">AI</span></h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">NLP</span>
-                        <span class="skill-tag">Recommender Systems</span>
-                        <span class="skill-tag">LLMs</span>
-                        <span class="skill-tag">RAG</span>
-                        <span class="skill-tag">Medical AI</span>
+                        <span class="skill-tag">Anthropic Claude</span>
+                        <span class="skill-tag">Gemini</span>
+                        <span class="skill-tag">Groq</span>
+                        <span class="skill-tag">RAG Pipelines</span>
+                        <span class="skill-tag">FAISS</span>
+                        <span class="skill-tag">Prompt Engineering</span>
                     </div>
                 </div>
                 <div class="skill-card ml-card">
-                    <h3 class="skill-card__title"><i class='bx bx-code-block'></i> ML Frameworks <span class="skill-card__category">ML</span></h3>
+                    <h3 class="skill-card__title"><i class='bx bx-microphone'></i> Voice & Multimodal <span class="skill-card__category">AI</span></h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Pipecat</span>
+                        <span class="skill-tag">LiveKit</span>
+                        <span class="skill-tag">Deepgram</span>
+                        <span class="skill-tag">Gemini Live API</span>
+                        <span class="skill-tag">Whisper</span>
+                        <span class="skill-tag">WebRTC</span>
+                    </div>
+                </div>
+                <div class="skill-card ml-card">
+                    <h3 class="skill-card__title"><i class='bx bx-brain'></i> ML & Deep Learning <span class="skill-card__category">AI</span></h3>
                     <div class="skill-tags">
                         <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">GNNs & Hypergraphs</span>
+                        <span class="skill-tag">Recommender Systems</span>
                         <span class="skill-tag">Hugging Face</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">XGBoost</span>
                         <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">MLflow</span>
                     </div>
                 </div>
                 <div class="skill-card mixed-card">
                     <h3 class="skill-card__title"><i class='bx bx-terminal'></i> Programming <span class="skill-card__category">Both</span></h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Python (Expert)</span>
-                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">TypeScript</span>
                         <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">CUDA</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Bash</span>
                     </div>
                 </div>
                 <div class="skill-card mixed-card">
-                    <h3 class="skill-card__title"><i class='bx bx-cog'></i> MLOps <span class="skill-card__category">Both</span></h3>
+                    <h3 class="skill-card__title"><i class='bx bx-cog'></i> LLMOps <span class="skill-card__category">Both</span></h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">AWS SageMaker</span>
                         <span class="skill-tag">MLflow</span>
-                        <span class="skill-tag">W&B</span>
-                        <span class="skill-tag">Ray</span>
+                        <span class="skill-tag">Agent Evals</span>
+                        <span class="skill-tag">Tracing & Observability</span>
+                        <span class="skill-tag">Cost Guardrails</span>
                         <span class="skill-tag">Model Serving</span>
-                        <span class="skill-tag">A/B Testing</span>
                     </div>
                 </div>
                 <div class="skill-card mixed-card">
                     <h3 class="skill-card__title"><i class='bx bx-rocket'></i> Optimization <span class="skill-card__category">Both</span></h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">CUDA Programming</span>
-                        <span class="skill-tag">Mixed Precision</span>
-                        <span class="skill-tag">Quantization</span>
-                        <span class="skill-tag">Distributed Training</span>
-                        <span class="skill-tag">Caching</span>
+                        <span class="skill-tag">Caching Strategies</span>
+                        <span class="skill-tag">Schema Optimization</span>
+                        <span class="skill-tag">Distributed Processing</span>
+                        <span class="skill-tag">Concurrency Control</span>
+                        <span class="skill-tag">Latency Tuning</span>
                     </div>
                 </div>
             </div>
@@ -972,98 +1204,84 @@
             <div class="work__container bd-grid">
                 <div class="work__item">
                     <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag ml">ML</span>
-                        <span class="role-tag swe">API</span>
-                        <span class="role-tag swe">Backend</span>
-                    </div>
-                    <h3 class="work__title">MedLLM – Medical Language Model</h3>
-                    <p class="work__tech">PyTorch | Transformers | LoRA | RAG | FastAPI | Pinecone</p>
-                    <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Fine-tuned Ollama 7B with LoRA on PubMed + MIMIC-III clinical notes<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Achieved <span class="code-number">80%</span> perplexity improvement and <span class="code-number">15%</span> higher ROUGE scores<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built production API with FastAPI, async handling, and rate limiting<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Implemented RAG architecture with Pinecone vector DB
-                    </p>
-                    <div class="work__links">
-                        <a href="" class="work__link"><i class='bx bxl-github'></i> Cannot share Code</a>
-                    </div>
-                </div>
-
-                <div class="work__item">
-                    <div class="role-tags" style="margin-bottom: 0.5rem;">
+                        <span class="role-tag ml">Multi-Agent</span>
                         <span class="role-tag swe">Full Stack</span>
-                        <span class="role-tag ml">NLP</span>
-                        <span class="role-tag swe">API</span>
                     </div>
-                    <h3 class="work__title">AI Calendar Scheduling Agent</h3>
-                    <p class="work__tech">Python | NLP | spaCy | FastAPI | PostgreSQL | JWT</p>
+                    <h3 class="work__title">Showrunner</h3>
+                    <p class="work__tech">Python | TypeScript | React | LangGraph | Flask | Anthropic Claude</p>
                     <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Built NLP agent with spaCy for intent recognition and temporal parsing<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Designed O(n) conflict detection using interval tree data structure<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built RESTful API with FastAPI, JWT auth, PostgreSQL persistence<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Integrated Google Calendar + Outlook APIs with webhooks
+                        Multi-agent content production system where specialized agents handle thumbnail generation, script writing, internet research for visual layouts, and scene setup, coordinated through a LangGraph DAG with explicit dependency edges, artifact versioning, and staleness propagation<br><br>
+                        Repair-not-retry loop where a diagnostic agent patches artifacts before retrying<br><br>
+                        HITL approval gate before any output gets finalized
                     </p>
                     <div class="work__links">
-                        <a href="https://github.com/divyankmalik/-Calendar-Scheduling-AI-Agent" class="work__link"><i class='bx bxl-github'></i> View Code</a>
+                        <a href="https://github.com/divyankmalik/creative-producer-ai" class="work__link" target="_blank"><i class='bx bxl-github'></i> View Code</a>
                     </div>
                 </div>
 
                 <div class="work__item">
                     <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag ml">Research</span>
-                        <span class="role-tag ml">GNNs</span>
-                        <span class="role-tag swe">Distributed</span>
+                        <span class="role-tag ml">Voice AI</span>
+                        <span class="role-tag swe">Tool Calling</span>
                     </div>
-                    <h3 class="work__title">Hypergraph Recommender System</h3>
-                    <p class="work__tech">PyTorch | PyTorch Geometric | CUDA | Ray | AWS</p>
+                    <h3 class="work__title">Pharmacy Voice Agent</h3>
+                    <p class="work__tech">Python | Pipecat | Deepgram | Gemini | SQLite</p>
                     <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Novel hypergraph neural network for large-scale recommendations<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Custom CUDA kernels for sparse hypergraph operations<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Distributed training infrastructure on multi-GPU cluster with Ray<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Beat SOTA baselines by <span class="code-number">8-12%</span> on benchmarks
+                        Real-time voice agent using Pipecat and Deepgram that searches through a drug dataset, checks availability, places orders, and tracks order status via tool calling across a structured SQLite database<br><br>
+                        Three callable tool functions: <span class="code-function">check_drug_availability</span>, <span class="code-function">place_order</span>, <span class="code-function">track_order</span><br><br>
+                        LLM never touches the database directly
                     </p>
                     <div class="work__links">
-                        <a href="" class="work__link"><i class='bx bxl-github'></i> Cannot share Code</a>
+                        <a href="https://github.com/divyankmalik/Pharmacy-Voice-Agent" class="work__link" target="_blank"><i class='bx bxl-github'></i> View Code</a>
                     </div>
                 </div>
 
                 <div class="work__item">
                     <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag swe">Production</span>
-                        <span class="role-tag ml">NLP</span>
-                        <span class="role-tag swe">DevOps</span>
+                        <span class="role-tag ml">RAG</span>
+                        <span class="role-tag swe">Full Stack</span>
                     </div>
-                    <h3 class="work__title">Veritas - AI Fact-Checking Platform</h3>
-                    <p class="work__tech">Flask | PostgreSQL | Redis | Docker | GitHub Actions | Claude API | Nginx</p>
+                    <h3 class="work__title">HIA (Health Intelligence Agent)</h3>
+                    <p class="work__tech">Python | LangChain | FAISS | Groq | Supabase | Streamlit | HuggingFace | Anthropic Claude</p>
                     <p class="work__description">
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Architected microservices REST API with Flask serving <span class="code-number">15K+</span> daily claim verifications<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Implemented Redis caching layer achieving <span class="code-number">&lt;200ms</span> p95 latency with <span class="code-number">67%</span> hit rate<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Built CI/CD pipeline with GitHub Actions – automated testing, security scans, blue-green ECS deployment<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Integrated Claude API for multi-source verification with web search – <span class="code-number">82%</span> accuracy across 10K claims<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Deployed with Docker Compose + Nginx load balancing – <span class="code-number">1.8x</span> throughput vs single instance
+                        Two-agent RAG pipeline for healthcare information retrieval<br><br>
+                        Diagnosed and fixed a retrieval faithfulness bug through systematic testing
                     </p>
                     <div class="work__links">
-                        <a href="https://github.com/divyankmalik/veritas-factchecker" class="work__link"><i class='bx bxl-github'></i> View Code</a>
+                        <a href="https://github.com/divyankmalik/Health-Intelligence-Agent" class="work__link" target="_blank"><i class='bx bxl-github'></i> View Code</a>
                     </div>
                 </div>
 
                 <div class="work__item">
                     <div class="role-tags" style="margin-bottom: 0.5rem;">
-                        <span class="role-tag swe">Production</span>
+                        <span class="role-tag ml">Voice AI</span>
+                        <span class="role-tag swe">Multimodal</span>
+                    </div>
+                    <h3 class="work__title">LeetCode Voice Tutor</h3>
+                    <p class="work__tech">Python | Pipecat | LiveKit | FastAPI | Gemini Live API | Render</p>
+                    <p class="work__description">
+                        Real-time multimodal voice agent using Pipecat, LiveKit, FastAPI, and Gemini Live API over WebRTC<br><br>
+                        Watches the user's screen and provides graduated hints without giving away solutions<br><br>
+                        Jailbreak-resistant system prompt, concurrency controls, session limits, and cost guardrails<br><br>
+                        Deployed on Render and Vercel
+                    </p>
+                    <div class="work__links">
+                        <a href="https://github.com/divyankmalik/leetcode-problems-helper-agent" class="work__link" target="_blank"><i class='bx bxl-github'></i> View Code</a>
+                    </div>
+                </div>
+
+                <div class="work__item">
+                    <div class="role-tags" style="margin-bottom: 0.5rem;">
                         <span class="role-tag ml">Computer Vision</span>
-                        <span class="role-tag swe">DevOps</span>
+                        <span class="role-tag swe">Automation</span>
                     </div>
-                    <h3 class="work__title">Medical Image Classification Pipeline</h3>
-                    <p class="work__tech">PyTorch | FastAPI | Docker | ONNX | DDP | Albumentations | Transformers</p>
+                    <h3 class="work__title">Clipper</h3>
+                    <p class="work__tech">Python | C++ | OpenCV | Whisper | LangGraph</p>
                     <p class="work__description">
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Built end-to-end CNN pipeline for pneumonia detection with <span class="code-number">93.8%</span> accuracy on 5.8K X-rays<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Implemented multimodal fusion (ResNet-50 + BioBERT) achieving <span class="code-number">95.1%</span> F1-score<br><br>
-                        <strong style="color: var(--accent-purple);">[ML]</strong> Optimized inference with INT8 quantization and pruning – <span class="code-number">2.1x</span> speedup, <span class="code-number">75%</span> size reduction<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Deployed FastAPI REST endpoint with <span class="code-number">&lt;50ms</span> inference latency and batch processing<br><br>
-                        <strong style="color: var(--accent-blue);">[SWE]</strong> Scaled training with PyTorch DDP across 2 GPUs – <span class="code-number">1.8x</span> throughput improvement
+                        Autonomous video-to-clip pipeline with computer vision using OpenCV and Whisper for real-time video analysis and processing
                     </p>
                     <div class="work__links">
-                        <a href="https://github.com/divyankmalik/Medical-Imaging" class="work__link"><i class='bx bxl-github'></i> View Code</a>
+                        <a href="https://github.com/divyankmalik/Clipper" class="work__link" target="_blank"><i class='bx bxl-github'></i> View Code</a>
                     </div>
                 </div>
             </div>
@@ -1081,13 +1299,13 @@
                     </div>
                     <div class="terminal-body">
                         <div class="terminal-line">
-                            <span class="code-keyword">class</span> <span class="code-class">SoftwareMLEngineer</span>:
+                            <span class="code-keyword">class</span> <span class="code-class">AgenticAIEngineer</span>:
                         </div>
                         <div class="terminal-line">
                             &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">name</span> = <span class="code-string">"Divyank Malik"</span>
                         </div>
                         <div class="terminal-line">
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">roles</span> = [<span class="code-string">"Software Engineer"</span>, <span class="code-string">"ML Engineer"</span>]
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">roles</span> = [<span class="code-string">"Software Engineer"</span>, <span class="code-string">"AI Agentic & LLM Engineer"</span>]
                         </div>
                         <div class="terminal-line">
                             &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">email</span> = <span class="code-string">"dmalik10@asu.edu"</span>
@@ -1099,7 +1317,7 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">github</span> = <span class="code-string">"github.com/divyankmalik"</span>
                         </div>
                         <div class="terminal-line" style="margin-top: 1rem;">
-                            <span class="code-comment"># Building intelligent software systems — let's connect!</span>
+                            <span class="code-comment"># Building agents that actually ship — let's connect!</span>
                         </div>
                     </div>
                 </div>
@@ -1113,10 +1331,12 @@
         </section>
     </main>
 
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top"><i class='bx bx-chevron-up'></i></button>
+
     <footer class="footer">
         <p class="footer__title">divyank.dev</p>
         <p style="color: var(--text-secondary); margin-bottom: 1rem; font-family: var(--code-font); font-size: 0.9rem;">
-            <span style="color: var(--accent-blue);">Software Engineer</span> + <span style="color: var(--accent-purple);">ML Engineer</span>
+            <span style="color: var(--accent-blue);">Software Engineer</span> + <span style="color: var(--accent-purple);">AI Agentic &amp; LLM Engineer</span>
         </p>
         <div class="footer__social">
             <a href="https://www.linkedin.com/in/divyank-malik-b5a430283/" class="footer__icon"><i class='bx bxl-linkedin'></i></a>
@@ -1129,15 +1349,15 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script>
         const roles = [
+            '"AI Agentic Engineer"',
+            '"LLM Engineer"',
             '"Software Engineer"',
-            '"ML Engineer"',
-            '"Full Stack Developer"',
-            '"Deep Learning Specialist"',
+            '"Multi-Agent Systems Developer"',
+            '"RAG Engineer"',
+            '"Voice AI Engineer"',
             '"Backend Engineer"',
-            '"Computer Vision Developer"',
             '"API Architect"',
-            '"NLP Engineer"',
-            '"DevOps Engineer"',
+            '"Full Stack Developer"',
             '"AI Researcher"'
         ];
         
@@ -1160,7 +1380,7 @@
                 typingSpeed = 100;
             }
             
-            if (currentRole.includes('ML') || currentRole.includes('Deep') || currentRole.includes('Vision') || currentRole.includes('NLP') || currentRole.includes('AI')) {
+            if (currentRole.includes('AI') || currentRole.includes('LLM') || currentRole.includes('Agent') || currentRole.includes('RAG') || currentRole.includes('Voice')) {
                 typingElement.style.color = '#c792ea';
             } else {
                 typingElement.style.color = '#82aaff';
@@ -1226,6 +1446,83 @@
         sr.reveal('.stat-item', { interval: 100 });
         sr.reveal('.role-badge', { interval: 150 });
         sr.reveal('.expertise-card', { interval: 200 });
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Scroll progress bar + back-to-top
+        const progressBar = document.getElementById('scroll-progress');
+        const backToTop = document.getElementById('back-to-top');
+
+        function onScrollUI() {
+            const doc = document.documentElement;
+            const max = doc.scrollHeight - doc.clientHeight;
+            const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
+            progressBar.style.width = pct + '%';
+            backToTop.classList.toggle('show-top', doc.scrollTop > 500);
+        }
+
+        window.addEventListener('scroll', onScrollUI, { passive: true });
+        onScrollUI();
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Count-up stat numbers when they scroll into view
+        const counters = document.querySelectorAll('.stat-number[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting || entry.target.dataset.done) return;
+                entry.target.dataset.done = '1';
+
+                const el = entry.target;
+                const target = parseFloat(el.dataset.count);
+                const suffix = el.dataset.suffix || '';
+                const decimals = (el.dataset.count.split('.')[1] || '').length;
+
+                if (reducedMotion) {
+                    el.textContent = target.toFixed(decimals) + suffix;
+                    return;
+                }
+
+                const duration = 1400;
+                const start = performance.now();
+                function tick(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = (target * eased).toFixed(decimals) + suffix;
+                    if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            });
+        }, { threshold: 0.4 });
+
+        counters.forEach(c => counterObserver.observe(c));
+
+        // Subtle 3D tilt on cards + mouse spotlight (desktop, motion-safe only)
+        if (!reducedMotion && window.matchMedia('(min-width: 768px)').matches) {
+            document.querySelectorAll('.work__item, .expertise-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    card.style.transform = `translateY(-6px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
+                });
+                card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+            });
+
+            const spotlight = document.getElementById('spotlight');
+            let rafId = null;
+            document.addEventListener('mousemove', e => {
+                if (rafId) return;
+                rafId = requestAnimationFrame(() => {
+                    spotlight.style.left = e.clientX + 'px';
+                    spotlight.style.top = e.clientY + 'px';
+                    spotlight.style.opacity = '1';
+                    rafId = null;
+                });
+            });
+        }
     </script>
 </body>
 </html>
